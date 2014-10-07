@@ -1,0 +1,16 @@
+apply plugin: 'scala'
+apply plugin: 'idea'
+
+sourceCompatibility = 1.7
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'org.scala-lang:scala-library:2.11.2'
+}
+
+compileScala {
+    scalaCompileOptions.useCompileDaemon = true
+}
