@@ -9,6 +9,7 @@ repositories {
 
 dependencies {
     compile 'org.scala-lang:scala-library:2.11.2'
+    compile 'org.parboiled:parboiled_2.11:2.0.1'
 }
 
 compileScala {
