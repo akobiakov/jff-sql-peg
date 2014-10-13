@@ -3,16 +3,6 @@ package ru.mrstrictly.jff.bnf
 import org.parboiled2.{CharPredicate, Parser, ParserInput}
 
 class BNFParser(val input: ParserInput) extends Parser {
-  /*
- <syntax>         ::= <rule> | <rule> <syntax>
- <rule>           ::= <opt-whitespace> "<" <rule-name> ">" <opt-whitespace> "::=" <opt-whitespace> <expression> <line-end>
- <opt-whitespace> ::= " " <opt-whitespace> | ""
- <expression>     ::= <list> | <list> "|" <expression>
- <line-end>       ::= <opt-whitespace> <EOL> | <line-end> <line-end>
- <list>           ::= <term> | <term> <opt-whitespace> <list>
- <term>           ::= <literal> | "<" <rule-name> ">"
- <literal>        ::= '"' <text> '"' | "'" <text> "'"
-   */
   def Input = rule {
     zeroOrMore(EOL) ~ Syntax ~ EOI
   }
@@ -38,34 +28,26 @@ class BNFParser(val input: ParserInput) extends Parser {
   }
 
   def Literal = rule {
-    DOUBLE_QUOTE ~ ANY_TEXT_EXCEPT_DQ ~ DOUBLE_QUOTE | QUOTE ~ ANY_TEXT_EXCEPT_Q ~ QUOTE
+    DQ ~ TEXT_WITHIN_DQ ~ DQ | Q ~ TEXT_WITHIN_Q ~ Q
   }
 
   def RuleName = rule {
     LT ~ RULE_NAME ~ GT
   }
 
-  def DOUBLE_QUOTE = rule {
-    '"'
-  }
+  def DQ = '"'
 
-  def QUOTE = rule {
-    '\''
-  }
+  def Q = '\''
 
-  def LT = rule {
-    '<'
-  }
+  def LT = '<'
 
-  def GT = rule {
-    '>'
-  }
+  def GT = '>'
 
-  def ANY_TEXT_EXCEPT_DQ = rule {
+  def TEXT_WITHIN_DQ = rule {
     zeroOrMore(CharPredicate.Printable -- '"')
   }
 
-  def ANY_TEXT_EXCEPT_Q = rule {
+  def TEXT_WITHIN_Q = rule {
     zeroOrMore(CharPredicate.Printable -- '\'')
   }
 

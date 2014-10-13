@@ -2,6 +2,7 @@ package ru.mrstrictly.jff.peg.sql99
 
 import org.parboiled2.ParseError
 import ru.mrstrictly.jff.bnf.BNFParser
+import ru.mrstrictly.jff.bnf.util.Naming
 
 import scala.util.{Failure, Success}
 
@@ -24,4 +25,6 @@ object Main extends App {
     case Failure(e: ParseError) => println("Expression is not valid: " + parser.formatError(e, showTraces = true))
     case Failure(e) => println("Unexpected error during parsing run: " + e)
   }
+
+  println(Naming.toValidJavaMethodName(""))
 }
